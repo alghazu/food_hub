@@ -1,0 +1,28 @@
+User
+  name
+  email
+  password
+  has_many recipes
+  has_many :comments, as: :commentable
+  likes
+  followers
+  following
+
+Recipe
+  title
+  description
+  ingredients
+  directions
+  likes
+  belongs_to user
+  belongs_to category
+  has_many :comments,  as: :commentable
+
+
+Category
+  name
+  has_many recipes
+
+Comment
+  content
+  belongs_to :commentable
