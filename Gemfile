@@ -14,11 +14,14 @@ gem "haml-rails", "~> 1.0"
 gem "devise"
 
 group :development, :test do
-  gem 'pry-byebug'
-  gem 'pry-rails'
+  gem 'coveralls', require: false
   gem 'cucumber-rails', '~> 1.6', require: false
   gem 'database_cleaner'
+  gem 'pry-byebug'
+  gem 'pry-rails'
   gem 'rspec-rails'
+  gem 'shoulda-matchers', '~> 3.1'
+  gem 'factory_bot_rails'
 end
 
 group :development do
