@@ -1,7 +1,7 @@
-%h1 Recipes
-
+%h1 Food Hub
 - @recipes.each do |recipe|
-  %h3= link_to recipe.title, recipe_path(recipe)
-  %p= recipe.description
-  %p= recipe.ingredients
-  %p= recipe.directions
+  %h3
+    = link_to recipe.title, recipe_path(recipe)
+    - if user_signed_in?
+      = link_to "&hearts;".html_safe , '#'
+  %p=  "\"#{recipe.description}\""
