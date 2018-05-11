@@ -17,8 +17,13 @@ User.create(
   email: 'george@example.com',
   password: '123456'
 )
-
+Category.create([{name: Appetizers & Snacks},{},{},{},{}])
+Breakfast & Brunch
+Desserts
+Dinner
+Drinks)
 Recipe.create(
+
   title: 'Mini Meatloaves',
   description: 'Quick and easy to make. A family favorite. The ketchup and brown sugar give these loaves a tangy flavor.',
   ingredients: '1 egg
