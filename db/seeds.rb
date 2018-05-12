@@ -17,11 +17,12 @@ User.create(
   email: 'george@example.com',
   password: '123456'
 )
-Category.create([{name: Appetizers & Snacks},{},{},{},{}])
-Breakfast & Brunch
-Desserts
-Dinner
-Drinks)
+Category.create([{name: 'Appetizers & Snacks'},
+                  {name: 'Breakfast & Brunch'},
+                  {name: 'Desserts'},
+                  {name: 'Dinner'},
+                  {name: 'Drinks'}])
+
 Recipe.create(
 
   title: 'Mini Meatloaves',
