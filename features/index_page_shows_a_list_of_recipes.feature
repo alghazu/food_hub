@@ -13,6 +13,6 @@ Background:
 
 Scenario: User views recipes on home page
   Given I visit the site
-  Then I should see "Recipes"
+  Then I should see "Food Hub"
   And I should see "Pizza"
   And I should see "An italian dish"

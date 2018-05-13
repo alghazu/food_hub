@@ -30,3 +30,7 @@ end
 Given("I am logged in as {string}") do |user_email|
   login_as User.find_by(email: user_email)
 end
+
+Then("I open page in browser") do
+  save_and_open_page
+end

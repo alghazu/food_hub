@@ -5,9 +5,17 @@
   .recipes
     %h3
       = link_to recipe.title, recipe_path(recipe)
-      - if user_signed_in?
-        = link_to "&hearts;".html_safe , '#'
     %p= "\"#{recipe.description}\""
+    %p
+      Category:
+      = recipe.category.name
     %p
       Posted by:
       = mail_to recipe.user.email
+    %p
+      - if user_signed_in? && recipe.user == current_user
+        = link_to 'Edit', edit_recipe_path(recipe)
+        = link_to 'Delete', recipe_path(recipe), method: :delete,
+                            data: {confirm: 'Are you sure?'}
+      - if user_signed_in?
+        = link_to "Like &hearts;".html_safe , '#'
