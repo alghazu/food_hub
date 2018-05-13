@@ -4,5 +4,8 @@
 %p= @recipe.ingredients
 %h4 Directions
 %p= @recipe.directions
+%p
+  Posted by:
+  = mail_to @recipe.user.email
 
 = link_to "Back", root_path

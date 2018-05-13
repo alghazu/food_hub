@@ -4,4 +4,5 @@ class Recipe < ApplicationRecord
   validates :ingredients, presence: true
   validates :directions, presence: true
   belongs_to :category
+  belongs_to :user
 end
