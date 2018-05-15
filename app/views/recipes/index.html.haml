@@ -6,6 +6,7 @@
     %h3
       = link_to recipe.title, recipe_path(recipe)
     %p= "\"#{recipe.description}\""
+    %hr
     %p
       Category:
       = recipe.category.name
@@ -22,5 +23,6 @@
         - if recipe.user != current_user
           = link_to 'Fork', '#'
 
-        = link_to "Like &hearts;".html_safe , '#'
+      = link_to 'like', recipe_like_path(recipe), method: :post
+      = "&hearts;".html_safe + Like.where(recipe_id: recipe.id).count.to_s
     %hr

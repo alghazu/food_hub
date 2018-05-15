@@ -5,6 +5,7 @@
 %h4 Directions
 %p= @recipe.directions
 - recipe = @recipe
+%hr
 %p
   Category:
   = @recipe.category.name
@@ -12,11 +13,15 @@
   Posted by:
   = mail_to @recipe.user.email
 %p
-  - if user_signed_in? && @recipe.user == current_user
-    = link_to 'Edit', edit_recipe_path(@recipe), method: :delete,
-                        data: {confirm: 'Are you sure?'}
   - if user_signed_in?
-    = link_to "Like &hearts;".html_safe , '#'
+    - if @recipe.user == current_user
+      = link_to 'Edit', edit_recipe_path(@recipe)
+      = link_to 'Delete', recipe_path(@recipe), method: :delete,
+                          data: {confirm: 'Are you sure?'}
 
+    - if @recipe.user != current_user
+      = link_to 'Fork', '#'
 
-= link_to "Back", root_path
+  = link_to 'like', recipe_like_path(@recipe), method: :post
+  = "&hearts;".html_safe + Like.where(recipe_id: @recipe.id).count.to_s
+%hr

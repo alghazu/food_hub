@@ -1,5 +1,6 @@
 class RecipesController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
+
   def new
     @recipe = Recipe.new
   end
@@ -11,6 +12,14 @@ class RecipesController < ApplicationController
       redirect_to root_path
     else
       render 'new'
+    end
+  end
+
+  def upvote
+    recipe_id = params[:recipe_id]
+    if Recipe.find(recipe_id).liking_users.exclude?(current_user)
+      Like.create(recipe_id: recipe_id, user_id: current_user.id)
+      redirect_to request.referrer
     end
   end
 
