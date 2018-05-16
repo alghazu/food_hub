@@ -15,14 +15,6 @@ class RecipesController < ApplicationController
     end
   end
 
-  def upvote
-    recipe_id = params[:recipe_id]
-    if Recipe.find(recipe_id).liking_users.exclude?(current_user)
-      Like.create(recipe_id: recipe_id, user_id: current_user.id)
-      redirect_to request.referrer
-    end
-  end
-
   def index
     @recipes = Recipe.all
   end
