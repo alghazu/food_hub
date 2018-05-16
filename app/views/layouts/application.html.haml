@@ -7,9 +7,8 @@
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
   %body
-    %h1= link_to 'Food Hub', root_path
+    %h1 Food Hub
     = render "layouts/navbar"
-    = render "layouts/category-bar"
     %p.notice= notice
     %p.alert= alert
     = yield

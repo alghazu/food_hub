@@ -1,0 +1,13 @@
+%h3 Profile
+= link_to "Edit Profile", edit_user_registration_path
+%p= "User Name: #{@user.name}"
+%p= "User Email #{@user.email}"
+
+- if @user.recipes.any?
+  %p= "Posted Recipes:"
+  %ul
+  - @user.recipes.each do |recipe|
+    %li= link_to recipe.title, recipe_path(recipe.id)
+- else
+  %p No recipes posted
+%br

@@ -11,7 +11,8 @@
   = link_to @recipe.category.name, category_path(@recipe.category)
 %p
   Posted by:
-  = mail_to @recipe.user.email, "#{@recipe.user.name} &#9993;".html_safe
+  = link_to @recipe.user.name, user_path(@recipe.user)
+  = mail_to @recipe.user.email, "&#9993;".html_safe
 %p
   - if user_signed_in?
     - if @recipe.user == current_user
@@ -23,8 +24,8 @@
       = link_to 'Fork', '#'
 
   = link_to 'like', recipe_like_path(@recipe), method: :post
-  = "&hearts;".html_safe + Like.where(recipe_id: @recipe.id).count.to_s
-  Liked by:
-  = @recipe.liking_users.map {|x| x.name}.join(', ') + '.'
+  - liking_users = @recipe.liking_users.map {|x| x.name}
+  - if liking_users != [];
+    = "&hearts; #{liking_users.size} likes by: #{liking_users.join(', ')}.".html_safe
 
 %hr

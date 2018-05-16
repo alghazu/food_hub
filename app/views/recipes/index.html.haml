@@ -1,17 +1,17 @@
-%p= link_to 'New Recipe', new_recipe_path
-
+= render "layouts/category-bar"
+%h3 Recipes:
 - @recipes.each do |recipe|
   .recipes
     %h3
       = link_to recipe.title, recipe_path(recipe)
     %p= "\"#{recipe.description}\""
-    %hr
     %p
       Category:
       = link_to recipe.category.name, category_path(recipe.category)
     %p
       Posted by:
-      = mail_to recipe.user.email, "#{recipe.user.name} &#9993;".html_safe
+      = link_to recipe.user.name, user_path(recipe.user)
+      = mail_to recipe.user.email, "&#9993;".html_safe
     %p
       - if user_signed_in?
         - if recipe.user == current_user
@@ -23,8 +23,7 @@
           = link_to 'Fork', '#'
 
       = link_to 'like', recipe_like_path(recipe), method: :post
-      = "&hearts;".html_safe + Like.where(recipe_id: recipe.id).count.to_s
       - liking_users = recipe.liking_users.map {|x| x.name}
       - if liking_users != [];
-        = "Liked by: #{liking_users.join(', ')}."
+        = "&hearts; #{liking_users.size} likes by: #{liking_users.join(', ')}.".html_safe
     %hr
