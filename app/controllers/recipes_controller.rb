@@ -16,15 +16,21 @@ class RecipesController < ApplicationController
   end
 
   def fork
-    current_recipe = Recipe.find(params[:recipe_id])
-    @recipe = current_recipe.dup
-    @recipe.title = current_user.name + "\'s " + current_recipe.title
-    @recipe.user = current_user
-    @recipe.fork_user << current_recipe.user.id
-    @recipe.fork_recipe << current_recipe.id
-    @recipe.save
-    redirect_to edit_recipe_path(@recipe.id)
-    flash[:notice] = "Recipe Sucessfully Forked"
+    recipe_id = params[:recipe_id]
+    if current_user.recipes.collect(&:fork_recipe).flatten.exclude?(recipe_id)
+      current_recipe = Recipe.find(recipe_id)
+      @recipe = current_recipe.dup
+      @recipe.title = current_user.name + "\'s " + current_recipe.title
+      @recipe.user = current_user
+      @recipe.fork_user << current_recipe.user.id
+      @recipe.fork_recipe << current_recipe.id
+      @recipe.save
+      redirect_to edit_recipe_path(@recipe.id)
+      flash[:notice] = "Recipe Sucessfully Forked"
+    else
+      redirect_to request.referrer
+      flash[:alert] = "You already have forked this recipe"
+    end
   end
 
   def index
