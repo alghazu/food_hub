@@ -31,7 +31,7 @@
                           data: {confirm: 'Are you sure?'}
 
     - if @recipe.user != current_user
-      = link_to 'Fork', '#'
+      = link_to 'Fork', recipe_fork_path(@recipe)
 
   = link_to 'like', recipe_like_path(@recipe), method: :post
   - liking_users = @recipe.liking_users.map {|x| x.name}
