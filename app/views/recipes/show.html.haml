@@ -1,4 +1,14 @@
 %h3= @recipe.title
+- if @recipe.fork_user.any?
+  %p
+    = "Forked from:"
+    - @recipe.fork_user.each.with_index do |author, index|
+      - if Recipe.exists?(@recipe.fork_recipe[index])
+        - link = recipe_path(@recipe.fork_recipe[index])
+        = link_to "#{User.find(author).name}> " , link
+      - else
+        = "Anonymous> "
+
 %p=  "\"#{@recipe.description}\""
 %h4 Ingredients
 %p= @recipe.ingredients

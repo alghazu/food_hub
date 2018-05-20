@@ -15,6 +15,18 @@ class RecipesController < ApplicationController
     end
   end
 
+  def fork
+    current_recipe = Recipe.find(params[:recipe_id])
+    @recipe = current_recipe.dup
+    @recipe.title = current_user.name + "\'s " + current_recipe.title
+    @recipe.user = current_user
+    @recipe.fork_user << current_recipe.user.id
+    @recipe.fork_recipe << current_recipe.id
+    @recipe.save
+    redirect_to edit_recipe_path(@recipe.id)
+    flash[:notice] = "Recipe Sucessfully Forked"
+  end
+
   def index
     @recipes = Recipe.all
   end

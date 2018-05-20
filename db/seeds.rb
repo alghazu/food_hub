@@ -9,14 +9,21 @@
 User.create(
   name: 'Nader',
   email: 'nader@example.com',
-  password: '123456'
+  password: '12345678'
 )
 
 User.create(
   name: 'George',
   email: 'george@example.com',
-  password: '123456'
+  password: '12345678'
 )
+
+User.create(
+  name: 'Petra',
+  email: 'petra@example.com',
+  password: '12345678'
+)
+
 Category.create([{name: 'Appetizers & Snacks'},
                   {name: 'Breakfast & Brunch'},
                   {name: 'Desserts'},

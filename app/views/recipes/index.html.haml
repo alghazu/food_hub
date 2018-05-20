@@ -4,6 +4,16 @@
   .recipes
     %h3
       = link_to recipe.title, recipe_path(recipe)
+    - if recipe.fork_user.any?
+      %p
+        = "Forked from:"
+        - recipe.fork_user.each.with_index do |author, index|
+          - if Recipe.exists?(recipe.fork_recipe[index])
+            - link = recipe_path(recipe.fork_recipe[index])
+            = link_to "#{User.find(author).name}> " , link
+          - else
+            = "Anonymous> "
+
     %p= "\"#{recipe.description}\""
     %p
       Category:
@@ -20,7 +30,7 @@
                               data: {confirm: 'Are you sure?'}
 
         - if recipe.user != current_user
-          = link_to 'Fork', '#'
+          = link_to 'Fork', recipe_fork_path(recipe)
 
       = link_to 'like', recipe_like_path(recipe), method: :post
       - liking_users = recipe.liking_users.map {|x| x.name}

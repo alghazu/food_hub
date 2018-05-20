@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   devise_for :users
   resources :recipes do
     post :like, controller: :likes, action: :toggle
+    get :fork, controller: :recipes, action: :fork
   end
   resources :users, only: [:show]
   resources :categories, only: [:show]
