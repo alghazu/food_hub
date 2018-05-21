@@ -1,6 +1,6 @@
 %h3= @recipe.title
-- if @recipe.fork_user.any?
-  %p
+%p
+  - if @recipe.fork_user.any?
     = "Forked from:"
     - @recipe.fork_user.each.with_index do |author, index|
       - if Recipe.exists?(@recipe.fork_recipe[index])
@@ -8,6 +8,9 @@
         = link_to "#{User.find(author).name}> " , link
       - else
         = "Anonymous> "
+  Posted by:
+  = link_to @recipe.user.name, user_path(@recipe.user)
+  = mail_to @recipe.user.email, "&#9993;".html_safe
 
 %p=  "\"#{@recipe.description}\""
 %h4 Ingredients
@@ -19,10 +22,6 @@
 %p
   Category:
   = link_to @recipe.category.name, category_path(@recipe.category)
-%p
-  Posted by:
-  = link_to @recipe.user.name, user_path(@recipe.user)
-  = mail_to @recipe.user.email, "&#9993;".html_safe
 %p
   - if user_signed_in?
     - if @recipe.user == current_user

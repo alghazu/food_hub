@@ -4,8 +4,8 @@
   .recipes
     %h3
       = link_to recipe.title, recipe_path(recipe)
-    - if recipe.fork_user.any?
-      %p
+    %p
+      - if recipe.fork_user.any?
         = "Forked from:"
         - recipe.fork_user.each.with_index do |author, index|
           - if Recipe.exists?(recipe.fork_recipe[index])
@@ -13,15 +13,14 @@
             = link_to "#{User.find(author).name}> " , link
           - else
             = "Anonymous> "
+      Posted by:
+      = link_to recipe.user.name, user_path(recipe.user)
+      = mail_to recipe.user.email, "&#9993;".html_safe
 
     %p= "\"#{recipe.description}\""
     %p
       Category:
       = link_to recipe.category.name, category_path(recipe.category)
-    %p
-      Posted by:
-      = link_to recipe.user.name, user_path(recipe.user)
-      = mail_to recipe.user.email, "&#9993;".html_safe
     %p
       - if user_signed_in?
         - if recipe.user == current_user
@@ -29,8 +28,8 @@
           = link_to 'Delete', recipe_path(recipe), method: :delete,
                               data: {confirm: 'Are you sure?'}
 
-        - if recipe.user != current_user
-          = link_to 'Fork', recipe_fork_path(recipe)
+      - if recipe.user != current_user
+        = link_to 'Fork', recipe_fork_path(recipe)
 
       - if recipe.liking_users.include?(current_user)
         = link_to 'Unlike', recipe_like_path(recipe), method: :delete

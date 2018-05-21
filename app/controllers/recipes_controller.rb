@@ -17,8 +17,17 @@ class RecipesController < ApplicationController
 
   def fork
     recipe_id = params[:recipe_id]
-    if current_user.recipes.collect(&:fork_recipe).flatten.exclude?(recipe_id)
-      current_recipe = Recipe.find(recipe_id)
+    current_recipe = Recipe.find(recipe_id)
+    if current_user.recipes.collect(&:fork_recipe).flatten.include?(recipe_id)
+      refresh_page
+      flash[:alert] = "You have already forked this recipe"
+    elsif current_recipe.user == current_user
+      refresh_page
+      flash[:alert]= "You can not fork your own recipe! Edit it instead"
+    elsif current_recipe.fork_user.include?(current_user.id.to_s)
+      refresh_page
+      flash[:alert]= "You can not fork a recipe that was forked from you"
+    else
       @recipe = current_recipe.dup
       @recipe.title = current_user.name + "\'s " + current_recipe.title
       @recipe.user = current_user
@@ -27,9 +36,6 @@ class RecipesController < ApplicationController
       @recipe.save
       redirect_to edit_recipe_path(@recipe.id)
       flash[:notice] = "Recipe Sucessfully Forked"
-    else
-      redirect_to request.referrer
-      flash[:alert] = "You already have forked this recipe"
     end
   end
 
@@ -75,4 +81,9 @@ class RecipesController < ApplicationController
    recipe[:user] = current_user
    recipe
   end
+
+  def refresh_page
+    redirect_to request.referrer
+  end
+
 end
