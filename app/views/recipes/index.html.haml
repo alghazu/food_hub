@@ -32,8 +32,11 @@
         - if recipe.user != current_user
           = link_to 'Fork', recipe_fork_path(recipe)
 
-      = link_to 'like', recipe_like_path(recipe), method: :post
-      - liking_users = recipe.liking_users.map {|x| x.name}
+      - if recipe.liking_users.include?(current_user)
+        = link_to 'Unlike', recipe_like_path(recipe), method: :delete
+      - else
+        = link_to 'like', recipe_like_path(recipe), method: :post
+      - liking_users = recipe.liking_users.collect(&:name)
       - if liking_users != [];
         = "&hearts; #{liking_users.size} likes by: #{liking_users.join(', ')}.".html_safe
     %hr
